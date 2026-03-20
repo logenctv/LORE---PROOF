@@ -259,6 +259,20 @@ body{display:flex;justify-content:center;}
 .go{display:flex;align-items:center;gap:8px;margin:0.6rem auto;justify-content:center;}
 .go-l{width:24px;height:1px;background:var(--gold-dim);}
 .go-i{color:var(--gold-dim);font-size:9px;}
+
+/* ── VALIDATION ── */
+.v-err{display:none;font-size:10px;color:#C0584A;margin-top:6px;padding-left:2px;letter-spacing:0.04em;}
+.v-err.show{display:block;animation:errFade 0.2s ease;}
+@keyframes errFade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+.v-invalid{border-color:#C0584A !important;border-bottom-color:#C0584A !important;}
+.oc.v-required-missing{border-color:#C0584A !important;border-left-color:#C0584A !important;background:rgba(192,88,74,0.05);}
+.bc.v-required-missing{border-color:#C0584A !important;}
+.vt.v-required-missing{border-color:#C0584A !important;}
+.path-tab.v-required-missing{border-color:#C0584A !important;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.shake{animation:shake 0.35s ease;}
+.v-section-err{font-size:10px;color:#C0584A;margin-top:8px;padding:6px 10px;background:rgba(192,88,74,0.08);border:1px solid rgba(192,88,74,0.25);border-radius:6px;display:none;}
+.v-section-err.show{display:block;}
 </style>
 </head>
 <body>
@@ -303,6 +317,7 @@ body{display:flex;justify-content:center;}
       <div class="path-tab post-tab" id="tpo" onclick="setPath('post')"><div class="pt-label">Post</div><div class="pt-sub">Edit, color, VFX</div></div>
       <div class="path-tab dev-tab" id="td" onclick="setPath('development')"><div class="pt-label">Development</div><div class="pt-sub">Produce, staff, create</div></div>
     </div>
+    <div id="s1-err" class="v-section-err">Please select what you're creating before continuing.</div>
     <div id="prod-cards"><div class="opt-grid">
       <div class="oc" onclick="tog(this)"><div class="oc-cat">Video · Marketing</div><div class="oc-t">Marketing Video</div><div class="oc-s">Advertising, Social, Informational, Product</div></div>
       <div class="oc" onclick="tog(this)"><div class="oc-cat">Video · Music</div><div class="oc-t">Music Video</div><div class="oc-s">Official MV, Visualizer, Lyric, Performance, EPK</div></div>
@@ -329,7 +344,7 @@ body{display:flex;justify-content:center;}
       <div class="dc" onclick="togC(this)"><div class="dc-cat">I'm Not Sure</div><div class="oc-t">I Have an Idea</div><div class="oc-s">Start here — we'll help you figure out the rest</div></div>
     </div></div>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s0')">← Back</button><button class="btn-p" onclick="go('s2')">Continue</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s0')">← Back</button><button class="btn-p" onclick="v1()">Continue</button></div>
 </div>
 
 <!-- ══ STEP 2 ══ -->
@@ -338,12 +353,12 @@ body{display:flex;justify-content:center;}
   <div class="prog-meta"><span>02 / 09</span><span class="prog-lbl" id="pl2">Timeline</span></div>
   <div class="step-hd" id="sh2"><p class="step-eyebrow" id="ey2">Timeline</p><h2 class="step-title" id="tt2">Ideal shooting window and release.</h2><p class="step-sub">Help us understand when you want to be in front of your audience.</p></div>
   <div class="step-body">
-    <div class="field"><label id="lbl-w">Ideal filming window</label><input type="text" id="f-win" placeholder="e.g. Mid-April, late spring, ASAP…"/></div>
+    <div class="field"><label id="lbl-w">Ideal filming window</label><input type="text" id="f-win" placeholder="e.g. Mid-April, late spring, ASAP…"/><span class="v-err" id="s2-err">Please give us a sense of your filming window — even "ASAP" or "flexible" works.</span></div>
     <div class="field"><label>Target release / delivery date</label><input type="date" style="color-scheme:dark;"/></div>
     <div class="field"><label>Important Dates</label><input type="text" id="f-dates" placeholder="Album release, premiere date, festival deadline…"/></div>
     <div class="field"><label>Any other important info?</label><textarea placeholder="Tour dates, blackout windows, launch events…" style="min-height:60px;"></textarea></div>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s1')">← Back</button><button class="btn-p" onclick="go('s3')">Continue</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s1')">← Back</button><button class="btn-p" onclick="v2()">Continue</button></div>
 </div>
 
 <!-- ══ STEP 3: PROJECT SCOPE (updated tiers) ══ -->
@@ -364,8 +379,9 @@ body{display:flex;justify-content:center;}
     </div>
     <div class="bc" style="margin-top:7px;text-align:center;" onclick="selB(this)"><div class="bc-r">$1M+</div><div class="bc-l">Studio level</div></div>
     <div class="bc" style="margin-top:7px;text-align:center;" onclick="selB(this)"><div class="bc-l" style="font-size:13px;color:var(--white2);">It's Complicated</div></div>
+    <div id="s3-err" class="v-section-err">Please select a budget range to help us scope your project.</div>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s2')">← Back</button><button class="btn-p" onclick="go('s4')">Continue</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s2')">← Back</button><button class="btn-p" onclick="v3()">Continue</button></div>
 </div>
 
 <!-- ══ STEP 4: VISION ══ -->
@@ -375,20 +391,20 @@ body{display:flex;justify-content:center;}
   <div class="step-hd" id="sh4"><p class="step-eyebrow" id="ey4">Describe Your World</p><h2 class="step-title" id="tt4">Tell us about your vision.</h2><p class="step-sub" id="sub4">No wrong answers. Paint us a picture.</p></div>
   <div class="step-body">
     <div id="vision-std"><div class="three-col">
-      <div class="field"><label>What are you going for?</label><textarea placeholder="What should this feel like?" style="min-height:110px;"></textarea></div>
+      <div class="field"><label>What are you going for?</label><textarea id="f-vision-main" placeholder="What should this feel like?" style="min-height:110px;"></textarea><span class="v-err" id="s4-err">Tell us a little about what you're going for — even a few words helps.</span></div>
       <div class="field"><label>Loose inspirations</label><textarea placeholder="Artists, films, directors…" style="min-height:110px;"></textarea></div>
       <div class="field"><label>Tones / vibe to avoid?</label><textarea placeholder="Colors, moods, styles that don't fit your vision…" style="min-height:110px;"></textarea></div>
     </div></div>
     <div id="vision-dev" style="display:none;">
       <div class="ic dev" style="margin-bottom:1rem;"><strong>No pressure.</strong> Answer what you can — leave blank what you don't know yet.</div>
-      <div class="field"><label>Describe your idea</label><textarea placeholder="e.g. I want to make a documentary. I have no idea where to start." style="min-height:80px;"></textarea></div>
+      <div class="field"><label>Describe your idea</label><textarea id="f-vision-dev" placeholder="e.g. I want to make a documentary. I have no idea where to start." style="min-height:80px;"></textarea><span class="v-err" id="s4-dev-err">Give us a brief description of your idea — anything helps.</span></div>
       <div class="field"><label>Who is this for?</label><textarea placeholder="A label, a brand, the general public…" style="min-height:55px;"></textarea></div>
       <div class="field"><label>What does success look like?</label><textarea placeholder="A finished film, a funded pitch, a viral campaign…" style="min-height:55px;"></textarea></div>
       <div class="field"><label>What have you figured out?</label><textarea placeholder="Story, cast, locations, funding, script…" style="min-height:55px;"></textarea></div>
       <div class="field"><label>Tones / vibe to avoid?</label><textarea placeholder="Colors, moods, styles that don't fit your vision…" style="min-height:55px;"></textarea></div>
     </div>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s3')">← Back</button><button class="btn-p" onclick="go('s5')">Continue</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s3')">← Back</button><button class="btn-p" onclick="v4()">Continue</button></div>
 </div>
 
 <!-- ══ STEP 5: FILES ══ -->
@@ -405,7 +421,7 @@ body{display:flex;justify-content:center;}
     <div class="uz" onclick="fakeUp('doc')"><div class="uz-i">◈</div><div class="uz-t" id="up-doc">Documents &amp; Materials</div><div class="uz-s">PDF</div></div>
     <ul class="fl" id="ul-doc"></ul>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s4')">← Back</button><button class="btn-p" onclick="nextS5()">Continue</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s4')">← Back</button><button class="btn-p" onclick="v5()">Continue</button></div>
 </div>
 
 <!-- ══ STEP 6: AESTHETIC (updated pairs) ══ -->
@@ -458,8 +474,9 @@ body{display:flex;justify-content:center;}
       <div class="vt" onclick="vlT(this,'dont')">Profanity On Screen</div>
       <div class="vt" onclick="vlT(this,'dont')">Product Placement</div>
     </div></div>
+    <div id="s7-err" class="v-section-err">Please tap at least one item — even just one thing to avoid helps us understand your vision.</div>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s6')">← Back</button><button class="btn-p" onclick="go('s8')">Continue</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s6')">← Back</button><button class="btn-p" onclick="v7()">Continue</button></div>
 </div>
 
 <!-- ══ STEP 8: ADD-ONS (updated) ══ -->
@@ -488,14 +505,17 @@ body{display:flex;justify-content:center;}
   <div class="prog-meta"><span>09 / 09</span><span class="prog-lbl">Your Account</span></div>
   <div class="step-hd"><p class="step-eyebrow">Almost There</p><h2 class="step-title">Create your LORE account.</h2><p class="step-sub">Access your portal, timeline, and deliverables.</p></div>
   <div class="step-body">
-    <div class="two-col"><div class="field"><label>First name</label><input type="text" placeholder="First"/></div><div class="field"><label>Last name</label><input type="text" placeholder="Last"/></div></div>
-    <div class="field"><label>Email address</label><input type="email" placeholder="you@example.com"/></div>
-    <div class="field"><label>Phone number</label><input type="tel" placeholder="+1 (615) 000-0000"/></div>
+    <div class="two-col">
+      <div class="field"><label>First name</label><input type="text" id="f-first" placeholder="First"/><span class="v-err" id="err-first">Required</span></div>
+      <div class="field"><label>Last name</label><input type="text" id="f-last" placeholder="Last"/><span class="v-err" id="err-last">Required</span></div>
+    </div>
+    <div class="field"><label>Email address</label><input type="email" id="f-email" placeholder="you@example.com"/><span class="v-err" id="err-email">Please enter a valid email address</span></div>
+    <div class="field"><label>Phone number</label><input type="tel" id="f-phone" placeholder="+1 (615) 000-0000"/><span class="v-err" id="err-phone">Required</span></div>
     <div class="field"><label>Artist / Brand name</label><input type="text" placeholder="How you're known publicly"/></div>
     <div class="field"><label>How did you find us?</label><select><option value="">Select one…</option><option>Referral from artist or team</option><option>Social media</option><option>Google search</option><option>Music industry network</option><option>Saw previous work</option><option>Other</option></select></div>
     <p style="font-size:10px;color:var(--white3);margin-top:0.25rem;line-height:1.65;">By submitting you agree to LORE's terms of use and confirm the confidentiality agreement. Your brief is private and shared only with the Stormlight Pictures creative team.</p>
   </div>
-  <div class="step-foot"><button class="btn-b" onclick="go('s8')">← Back</button><button class="btn-red" onclick="go('sC')">Submit My Brief to LORE</button></div>
+  <div class="step-foot"><button class="btn-b" onclick="go('s8')">← Back</button><button class="btn-red" onclick="v9()">Submit My Brief to LORE</button></div>
 </div>
 
 <!-- ══ CONFIRM ══ -->
@@ -528,7 +548,135 @@ body{display:flex;justify-content:center;}
 let path='production';
 const upS={img:['mood_ref_01.jpg','dark_editorial.jpg','lighting_inspo.png'],aud:['track_final_v3.mp3'],doc:['press_kit_2025.pdf']};
 const upI={img:0,aud:0,doc:0};
+
 function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+
+/* ── VALIDATION HELPERS ── */
+function clearErr(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el){el.classList.remove('show','v-invalid','v-required-missing');}});}
+function showErr(id){const el=document.getElementById(id);if(el)el.classList.add('show');}
+function markInvalid(id){const el=document.getElementById(id);if(el)el.classList.add('v-invalid');}
+function markCardErr(id){const el=document.getElementById(id);if(el)el.classList.add('v-required-missing');}
+function shakeBtn(btn){btn.classList.remove('shake');void btn.offsetWidth;btn.classList.add('shake');btn.addEventListener('animationend',()=>btn.classList.remove('shake'),{once:true});}
+function scrollToErr(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+
+/* ── STEP 1 VALIDATION — must select path + at least one card ── */
+function v1(){
+  clearErr(['s1-err']);
+  const cards = document.querySelectorAll('#prod-cards .oc.sel, #post-cards .pc.sel, #dev-cards .dc.sel');
+  if(cards.length===0){
+    showErr('s1-err');
+    scrollToErr('s1-err');
+    shakeBtn(event.target);
+    return;
+  }
+  go('s2');
+}
+
+/* ── STEP 2 VALIDATION — filming window required ── */
+function v2(){
+  clearErr(['s2-err','f-win']);
+  const win = document.getElementById('f-win').value.trim();
+  if(!win){
+    showErr('s2-err');
+    markInvalid('f-win');
+    document.getElementById('f-win').focus();
+    shakeBtn(event.target);
+    return;
+  }
+  go('s3');
+}
+
+/* ── STEP 3 VALIDATION — must select a budget tier ── */
+function v3(){
+  clearErr(['s3-err']);
+  const sel = document.querySelector('.bc.sel');
+  if(!sel){
+    showErr('s3-err');
+    scrollToErr('s3-err');
+    shakeBtn(event.target);
+    return;
+  }
+  go('s4');
+}
+
+/* ── STEP 4 VALIDATION — first vision field required ── */
+function v4(){
+  clearErr(['s4-err','s4-dev-err','f-vision-main','f-vision-dev']);
+  if(document.getElementById('vision-std').style.display!=='none'){
+    const val = document.getElementById('f-vision-main').value.trim();
+    if(!val){
+      showErr('s4-err');
+      markInvalid('f-vision-main');
+      document.getElementById('f-vision-main').focus();
+      shakeBtn(event.target);
+      return;
+    }
+  } else {
+    const val = document.getElementById('f-vision-dev').value.trim();
+    if(!val){
+      showErr('s4-dev-err');
+      markInvalid('f-vision-dev');
+      document.getElementById('f-vision-dev').focus();
+      shakeBtn(event.target);
+      return;
+    }
+  }
+  go('s5');
+}
+
+/* ── STEP 5 — no validation (uploads optional) ── */
+function v5(){
+  if(path==='production') go('s6'); else go('s8');
+}
+
+/* ── STEP 7 VALIDATION — at least one DO or DON'T tag tapped ── */
+function v7(){
+  clearErr(['s7-err']);
+  const tagged = document.querySelectorAll('#s7 .vt.on-do, #s7 .vt.on-dont');
+  if(tagged.length===0){
+    showErr('s7-err');
+    scrollToErr('s7-err');
+    shakeBtn(event.target);
+    return;
+  }
+  go('s8');
+}
+
+/* ── STEP 9 VALIDATION — name, email, phone required ── */
+function v9(){
+  clearErr(['err-first','err-last','err-email','err-phone','f-first','f-last','f-email','f-phone']);
+  let ok = true;
+  const first = document.getElementById('f-first').value.trim();
+  const last  = document.getElementById('f-last').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  if(!first){showErr('err-first');markInvalid('f-first');ok=false;}
+  if(!last){showErr('err-last');markInvalid('f-last');ok=false;}
+  if(!email||!emailOk){showErr('err-email');markInvalid('f-email');ok=false;}
+  if(!phone){showErr('err-phone');markInvalid('f-phone');ok=false;}
+
+  if(!ok){
+    shakeBtn(event.target);
+    const firstBad = ['f-first','f-last','f-email','f-phone'].find(id=>document.getElementById(id).classList.contains('v-invalid'));
+    if(firstBad) document.getElementById(firstBad).focus();
+    return;
+  }
+  go('sC');
+}
+
+/* clear validation styling when user starts typing / selecting */
+document.addEventListener('input',function(e){
+  if(e.target.id==='f-win'){clearErr(['s2-err']);e.target.classList.remove('v-invalid');}
+  if(e.target.id==='f-vision-main'){clearErr(['s4-err']);e.target.classList.remove('v-invalid');}
+  if(e.target.id==='f-vision-dev'){clearErr(['s4-dev-err']);e.target.classList.remove('v-invalid');}
+  if(e.target.id==='f-first'){clearErr(['err-first']);e.target.classList.remove('v-invalid');}
+  if(e.target.id==='f-last'){clearErr(['err-last']);e.target.classList.remove('v-invalid');}
+  if(e.target.id==='f-email'){clearErr(['err-email']);e.target.classList.remove('v-invalid');}
+  if(e.target.id==='f-phone'){clearErr(['err-phone']);e.target.classList.remove('v-invalid');}
+});
+
 function setPath(p){
   path=p;
   ['tp','tpo','td'].forEach(t=>document.getElementById(t).classList.remove('ap'));
@@ -581,13 +729,12 @@ function setPath(p){
     document.getElementById('tl4').textContent='Shoot Plan & Call Sheet';
   }
 }
-function nextS5(){go(path==='production'?'s6':'s8');}
 function backS8(){go(path==='production'?'s7':'s5');}
-function tog(el){el.classList.toggle('sel');}
-function togC(el){el.classList.toggle('sel');}
-function selB(el){document.querySelectorAll('.bc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');}
+function tog(el){el.classList.toggle('sel');clearErr(['s1-err']);}
+function togC(el){el.classList.toggle('sel');clearErr(['s1-err']);}
+function selB(el){document.querySelectorAll('.bc').forEach(c=>c.classList.remove('sel'));el.classList.add('sel');clearErr(['s3-err']);}
 function pickP(el,g){el.closest('.pr').querySelectorAll('.po').forEach(o=>o.classList.remove('sel'));el.classList.add('sel');}
-function vlT(el,k){el.classList.remove('on-do','on-dont');el.classList.toggle('on-'+k);}
+function vlT(el,k){el.classList.remove('on-do','on-dont');el.classList.toggle('on-'+k);clearErr(['s7-err']);}
 function togA(el){el.classList.toggle('sel');el.querySelector('.addon-chk').textContent=el.classList.contains('sel')?'✦':'+';}
 function fakeUp(t){const s=upS[t];if(upI[t]>=s.length)return;const li=document.createElement('li');li.innerHTML='<span class="fd"></span>'+s[upI[t]++];document.getElementById('ul-'+t).appendChild(li);}
 </script>
