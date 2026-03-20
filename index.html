@@ -889,8 +889,12 @@ async function openDriveFolder(e){
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.6';
 
-  // Open window immediately to preserve user gesture (required by iOS Safari)
+  // Open window immediately with a loading screen so it doesn't feel broken
   const win = window.open('', '_blank');
+  if(win){
+    win.document.write(`<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#0A0806;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;color:#C9A84C;text-align:center;gap:16px;}p{font-size:13px;color:#6A6058;letter-spacing:0.08em;}</style></head><body><div style="font-size:22px;">✦</div><p>PREPARING YOUR FOLDER…</p></body></html>`);
+    win.document.close();
+  }
 
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbzc-cHQpOiBJkaCc2LE7SXe9jwq2pknY3BR_4He6a_DYepbI7rB67Zw2CY2NZneX4z8/exec';
 
@@ -915,7 +919,7 @@ async function openDriveFolder(e){
   if(folderUrl){
     win.location.href = folderUrl;
   } else {
-    win.close();
+    if(win) win.close();
     lbl.textContent = '⚠ Try again';
     btn.style.opacity = '0.7';
     setTimeout(()=>{
