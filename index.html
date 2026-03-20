@@ -110,7 +110,7 @@ body{display:flex;justify-content:center;}
 .site-link:hover{color:var(--gold);}
 .presented-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:1.1rem;}
 .presented-by{font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--white3);}
-.storm-logo{width:160px;opacity:0.55;}
+.storm-logo{width:185px;opacity:0.65;mix-blend-mode:screen;}
 
 /* PROGRESS */
 .prog-bar{height:2px;background:var(--black3);}
@@ -730,7 +730,7 @@ body{display:flex;justify-content:center;}
 
     <div class="field" style="margin-top:1.25rem;">
       <label>Upload Your Files</label>
-      <button id="drive-upload-btn" class="drive-upload-btn" onclick="openDriveFolder(event)">
+      <button id="drive-upload-btn" class="drive-upload-btn">
         <span class="drive-ic">↑</span> <span id="drive-btn-label">Upload to Stormlight Drive</span>
       </button>
       <p style="font-size:10px;color:var(--white3);margin-top:8px;">Mood boards, reference images, rough cuts, documents — drop anything that helps us understand your vision.</p>
@@ -877,37 +877,62 @@ function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remo
 
 /* ── DRIVE UPLOAD: creates a private per-client folder via Apps Script ── */
 async function openDriveFolder(e){
-  e.preventDefault();
+  if(e) e.preventDefault();
   const first = (document.getElementById('f-first')?.value||'').trim();
   const last  = (document.getElementById('f-last')?.value||'').trim();
   const name  = (first||last) ? (first+' '+last).trim() : 'New Client';
 
   const lbl = document.getElementById('drive-btn-label');
   const btn = document.getElementById('drive-upload-btn');
+
   lbl.textContent = 'Creating your folder…';
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.6';
 
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbzc-cHQpOiBJkaCc2LE7SXe9jwq2pknY3BR_4He6a_DYepbI7rB67Zw2CY2NZneX4z8/exec';
 
+  let folderUrl = null;
+
   try {
-    const res = await fetch(scriptUrl + '?name=' + encodeURIComponent(name));
-    const url = await res.text();
-    if(url.startsWith('https')){
-      window.open(url, '_blank');
-      btn.setAttribute('data-folder', url);
-    } else {
-      throw new Error('bad response');
+    const res = await fetch(scriptUrl + '?name=' + encodeURIComponent(name), {
+      method: 'GET',
+      mode: 'cors',
+    });
+    const text = await res.text();
+    if(text && text.trim().startsWith('https')){
+      folderUrl = text.trim();
     }
   } catch(err){
-    // Fallback — open parent folder
-    window.open('https://drive.google.com/drive/folders/1l1igS-OliX5FxQdA_usAuFDiXHGkBLON', '_blank');
+    console.log('Script fetch error:', err);
   }
 
   lbl.textContent = 'Upload to Stormlight Drive';
   btn.style.pointerEvents = '';
   btn.style.opacity = '';
+
+  if(folderUrl){
+    window.open(folderUrl, '_blank');
+  } else {
+    lbl.textContent = '⚠ Try again';
+    btn.style.opacity = '0.7';
+    setTimeout(()=>{
+      lbl.textContent = 'Upload to Stormlight Drive';
+      btn.style.opacity = '';
+    }, 3000);
+  }
 }
+
+// Wire up upload button for both mouse and touch
+document.addEventListener('DOMContentLoaded', function(){
+  const uploadBtn = document.getElementById('drive-upload-btn');
+  if(uploadBtn){
+    uploadBtn.addEventListener('click', openDriveFolder);
+    uploadBtn.addEventListener('touchend', function(e){
+      e.preventDefault();
+      openDriveFolder(e);
+    });
+  }
+});
 
 /* ── VALIDATION HELPERS ── */
 function clearErr(ids){ids.forEach(id=>{const el=document.getElementById(id);if(el){el.classList.remove('show','v-invalid','v-required-missing');}});}
