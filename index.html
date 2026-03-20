@@ -775,6 +775,7 @@ function autoPath(el, p){
   else p='production'; // mixed = default to production
   if(path !== p) setPath(p);
 }
+function setPath(p){
   path=p;
   ['tp','tpo','td'].forEach(t=>document.getElementById(t).classList.remove('ap'));
   document.getElementById(p==='production'?'tp':p==='post'?'tpo':'td').classList.add('ap');
