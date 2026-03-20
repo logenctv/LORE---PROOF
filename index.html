@@ -690,11 +690,11 @@ body{display:flex;justify-content:center;}
   <div class="step-body">
     <div class="bg">
       <div class="bc" onclick="selB(this)"><div class="bc-r">Under $1K</div><div class="bc-l">Micro project</div></div>
-      <div class="bc" onclick="selB(this)"><div class="bc-r">Under $2,500</div><div class="bc-l">Focused shoot</div></div>
-      <div class="bc" onclick="selB(this)"><div class="bc-r">$2,500–$5K</div><div class="bc-l">Scrappy Project</div></div>
-      <div class="bc" onclick="selB(this)"><div class="bc-r">$5K–$10K</div><div class="bc-l">Full production</div></div>
-      <div class="bc" onclick="selB(this)"><div class="bc-r">$10K–$25K</div><div class="bc-l">Premium slate</div></div>
-      <div class="bc" onclick="selB(this)"><div class="bc-r">$25K–$50K</div><div class="bc-l">Major project</div></div>
+      <div class="bc" onclick="selB(this)"><div class="bc-r">Under $2,500</div><div class="bc-l">Quick & Easy</div></div>
+      <div class="bc" onclick="selB(this)"><div class="bc-r">$2,500–$5K</div><div class="bc-l">Scrappy</div></div>
+      <div class="bc" onclick="selB(this)"><div class="bc-r">$5K–$10K</div><div class="bc-l">Basic Production</div></div>
+      <div class="bc" onclick="selB(this)"><div class="bc-r">$10K–$25K</div><div class="bc-l">Standard</div></div>
+      <div class="bc" onclick="selB(this)"><div class="bc-r">$25K–$50K</div><div class="bc-l">Healthy Budget</div></div>
       <div class="bc" onclick="selB(this)"><div class="bc-r">$50K–$250K</div><div class="bc-l">Large scale</div></div>
       <div class="bc" onclick="selB(this)"><div class="bc-r">Indie</div><div class="bc-l">Under $1M</div></div>
     </div>
@@ -889,10 +889,12 @@ async function openDriveFolder(e){
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.6';
 
+  // Open window immediately to preserve user gesture (required by iOS Safari)
+  const win = window.open('', '_blank');
+
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbzc-cHQpOiBJkaCc2LE7SXe9jwq2pknY3BR_4He6a_DYepbI7rB67Zw2CY2NZneX4z8/exec';
 
   let folderUrl = null;
-
   try {
     const res = await fetch(scriptUrl + '?name=' + encodeURIComponent(name), {
       method: 'GET',
@@ -911,8 +913,9 @@ async function openDriveFolder(e){
   btn.style.opacity = '';
 
   if(folderUrl){
-    window.open(folderUrl, '_blank');
+    win.location.href = folderUrl;
   } else {
+    win.close();
     lbl.textContent = '⚠ Try again';
     btn.style.opacity = '0.7';
     setTimeout(()=>{
