@@ -428,6 +428,8 @@ body{display:flex;justify-content:center;}
 
     <!-- Hidden fields to capture file notes -->
     <div class="field"><label id="up-img">Describe what you're uploading (optional)</label><textarea id="f-files-desc" placeholder="e.g. 3 mood board images, rough demo track, press kit PDF…" style="min-height:55px;"></textarea></div>
+
+    <div class="field"><label>Inspiration link (optional)</label><input type="url" id="f-inspo-link" placeholder="Pinterest board, Google Drive folder, Dropbox, Are.na…"/><p style="font-size:10px;color:var(--white3);margin-top:5px;">Already have a mood board or reference folder? Drop the link here.</p></div>
   </div>
   <div class="step-foot"><button class="btn-b" onclick="go('s4')">← Back</button><button class="btn-p" onclick="v5()">Continue</button></div>
 </div>
@@ -723,6 +725,7 @@ async function v9(){
     'Dev — Avoid': g('f-dev-avoid'),
     // Step 5
     'Files Description': g('f-files-desc'),
+    'Inspiration Link': g('f-inspo-link'),
     // Step 6
     'Aesthetic Pairs': aestheticPairs,
     // Step 7
