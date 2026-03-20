@@ -733,6 +733,7 @@ body{display:flex;justify-content:center;}
       <button id="drive-upload-btn" class="drive-upload-btn">
         <span class="drive-ic">↑</span> <span id="drive-btn-label">Upload to Stormlight Drive</span>
       </button>
+      <a id="drive-folder-link" href="#" target="_blank" style="display:none;margin-top:8px;align-items:center;justify-content:center;gap:8px;padding:0.75rem 1rem;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.4);border-radius:10px;color:var(--gold-light);font-family:'Josefin Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;">↗ &nbsp;Open My Upload Folder</a>
       <p style="font-size:10px;color:var(--white3);margin-top:8px;">Mood boards, reference images, rough cuts, documents — drop anything that helps us understand your vision.</p>
     </div>
 
@@ -884,17 +885,12 @@ async function openDriveFolder(e){
 
   const lbl = document.getElementById('drive-btn-label');
   const btn = document.getElementById('drive-upload-btn');
+  const linkWrap = document.getElementById('drive-folder-link');
 
   lbl.textContent = 'Creating your folder…';
   btn.style.pointerEvents = 'none';
   btn.style.opacity = '0.6';
-
-  // Open window immediately with a loading screen so it doesn't feel broken
-  const win = window.open('', '_blank');
-  if(win){
-    win.document.write(`<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#0A0806;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;color:#C9A84C;text-align:center;gap:16px;}p{font-size:13px;color:#6A6058;letter-spacing:0.08em;}</style></head><body><div style="font-size:22px;">✦</div><p>PREPARING YOUR FOLDER…</p></body></html>`);
-    win.document.close();
-  }
+  if(linkWrap) linkWrap.style.display = 'none';
 
   const scriptUrl = 'https://script.google.com/macros/s/AKfycbzc-cHQpOiBJkaCc2LE7SXe9jwq2pknY3BR_4He6a_DYepbI7rB67Zw2CY2NZneX4z8/exec';
 
@@ -912,14 +908,18 @@ async function openDriveFolder(e){
     console.log('Script fetch error:', err);
   }
 
-  lbl.textContent = 'Upload to Stormlight Drive';
   btn.style.pointerEvents = '';
   btn.style.opacity = '';
 
   if(folderUrl){
-    win.location.href = folderUrl;
+    lbl.textContent = '✦ Folder Ready';
+    btn.style.background = 'rgba(201,168,76,0.12)';
+    btn.style.borderColor = 'rgba(201,168,76,0.5)';
+    if(linkWrap){
+      linkWrap.href = folderUrl;
+      linkWrap.style.display = 'flex';
+    }
   } else {
-    if(win) win.close();
     lbl.textContent = '⚠ Try again';
     btn.style.opacity = '0.7';
     setTimeout(()=>{
