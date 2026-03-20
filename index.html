@@ -354,9 +354,9 @@ body{display:flex;justify-content:center;}
   <div class="step-hd" id="sh2"><p class="step-eyebrow" id="ey2">Timeline</p><h2 class="step-title" id="tt2">Ideal shooting window and release.</h2><p class="step-sub">Help us understand when you want to be in front of your audience.</p></div>
   <div class="step-body">
     <div class="field"><label id="lbl-w">Ideal filming window</label><input type="text" id="f-win" placeholder="e.g. Mid-April, late spring, ASAP…"/><span class="v-err" id="s2-err">Please give us a sense of your filming window — even "ASAP" or "flexible" works.</span></div>
-    <div class="field"><label>Target release / delivery date</label><input type="date" style="color-scheme:dark;"/></div>
-    <div class="field"><label>Important Dates</label><input type="text" id="f-dates" placeholder="Album release, premiere date, festival deadline…"/></div>
-    <div class="field"><label>Any other important info?</label><textarea placeholder="Tour dates, blackout windows, launch events…" style="min-height:60px;"></textarea></div>
+    <div class="field"><label>Target release / delivery date</label><input type="date" id="f-release" style="color-scheme:dark;"/></div>
+    <div class="field"><label id="lbl-dates">Important Dates</label><input type="text" id="f-dates" placeholder="Album release, premiere date, festival deadline…"/></div>
+    <div class="field"><label>Any other important info?</label><textarea id="f-timeline-notes" placeholder="Tour dates, blackout windows, launch events…" style="min-height:60px;"></textarea></div>
   </div>
   <div class="step-foot"><button class="btn-b" onclick="go('s1')">← Back</button><button class="btn-p" onclick="v2()">Continue</button></div>
 </div>
@@ -392,16 +392,16 @@ body{display:flex;justify-content:center;}
   <div class="step-body">
     <div id="vision-std"><div class="three-col">
       <div class="field"><label>What are you going for?</label><textarea id="f-vision-main" placeholder="What should this feel like?" style="min-height:110px;"></textarea><span class="v-err" id="s4-err">Tell us a little about what you're going for — even a few words helps.</span></div>
-      <div class="field"><label>Loose inspirations</label><textarea placeholder="Artists, films, directors…" style="min-height:110px;"></textarea></div>
-      <div class="field"><label>Tones / vibe to avoid?</label><textarea placeholder="Colors, moods, styles that don't fit your vision…" style="min-height:110px;"></textarea></div>
+      <div class="field"><label>Loose inspirations</label><textarea id="f-inspirations" placeholder="Artists, films, directors…" style="min-height:110px;"></textarea></div>
+      <div class="field"><label>Tones / vibe to avoid?</label><textarea id="f-avoid" placeholder="Colors, moods, styles that don't fit your vision…" style="min-height:110px;"></textarea></div>
     </div></div>
     <div id="vision-dev" style="display:none;">
       <div class="ic dev" style="margin-bottom:1rem;"><strong>No pressure.</strong> Answer what you can — leave blank what you don't know yet.</div>
       <div class="field"><label>Describe your idea</label><textarea id="f-vision-dev" placeholder="e.g. I want to make a documentary. I have no idea where to start." style="min-height:80px;"></textarea><span class="v-err" id="s4-dev-err">Give us a brief description of your idea — anything helps.</span></div>
-      <div class="field"><label>Who is this for?</label><textarea placeholder="A label, a brand, the general public…" style="min-height:55px;"></textarea></div>
-      <div class="field"><label>What does success look like?</label><textarea placeholder="A finished film, a funded pitch, a viral campaign…" style="min-height:55px;"></textarea></div>
-      <div class="field"><label>What have you figured out?</label><textarea placeholder="Story, cast, locations, funding, script…" style="min-height:55px;"></textarea></div>
-      <div class="field"><label>Tones / vibe to avoid?</label><textarea placeholder="Colors, moods, styles that don't fit your vision…" style="min-height:55px;"></textarea></div>
+      <div class="field"><label>Who is this for?</label><textarea id="f-dev-audience" placeholder="A label, a brand, the general public…" style="min-height:55px;"></textarea></div>
+      <div class="field"><label>What does success look like?</label><textarea id="f-dev-success" placeholder="A finished film, a funded pitch, a viral campaign…" style="min-height:55px;"></textarea></div>
+      <div class="field"><label>What have you figured out?</label><textarea id="f-dev-figured" placeholder="Story, cast, locations, funding, script…" style="min-height:55px;"></textarea></div>
+      <div class="field"><label>Tones / vibe to avoid?</label><textarea id="f-dev-avoid" placeholder="Colors, moods, styles that don't fit your vision…" style="min-height:55px;"></textarea></div>
     </div>
   </div>
   <div class="step-foot"><button class="btn-b" onclick="go('s3')">← Back</button><button class="btn-p" onclick="v4()">Continue</button></div>
@@ -414,12 +414,20 @@ body{display:flex;justify-content:center;}
   <div class="step-hd" id="sh5"><p class="step-eyebrow" id="ey5">Show Us</p><h2 class="step-title" id="tt5">Upload your inspiration.</h2><p class="step-sub" id="sub5">Images, music, or materials that set the mood.</p></div>
   <div class="step-body">
     <div class="nda"><p class="nda-t">✦ &nbsp; Confidentiality Agreement &nbsp; ✦</p><p class="nda-b">By uploading materials, both parties agree in good faith that all files and creative assets shared through LORE are strictly confidential. Stormlight Pictures will not share, distribute, or use any uploaded materials for any purpose other than evaluating and fulfilling your project. This constitutes a mutual agreement of creative trust.</p></div>
-    <div class="uz" onclick="fakeUp('img')"><div class="uz-i">⬡</div><div class="uz-t" id="up-img">Inspiration Images</div><div class="uz-s">JPG · PNG · HEIC</div></div>
-    <ul class="fl" id="ul-img"></ul>
-    <div class="uz" onclick="fakeUp('aud')"><div class="uz-i">◉</div><div class="uz-t">Audio Files</div><div class="uz-s">MP3 · WAV</div></div>
-    <ul class="fl" id="ul-aud"></ul>
-    <div class="uz" onclick="fakeUp('doc')"><div class="uz-i">◈</div><div class="uz-t" id="up-doc">Documents &amp; Materials</div><div class="uz-s">PDF</div></div>
-    <ul class="fl" id="ul-doc"></ul>
+
+    <!-- Google Drive upload link -->
+    <a href="https://drive.google.com/drive/folders/1NuNpRp7VQ3mM3tZCPVktMBP0b02UqSqU" target="_blank" id="drive-link" style="display:flex;align-items:center;gap:12px;background:var(--black3);border:1px solid var(--border-gold);border-radius:var(--radius);padding:1rem 1.1rem;text-decoration:none;margin-bottom:1rem;transition:all 0.15s;">
+      <div style="font-size:22px;flex-shrink:0;">◈</div>
+      <div>
+        <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;color:var(--gold);margin-bottom:3px;">Upload Your Files →</div>
+        <div style="font-size:11px;color:var(--white2);">Drop images, audio, and documents in our shared Stormlight folder</div>
+        <div style="font-size:10px;color:var(--white3);margin-top:2px;">JPG · PNG · HEIC · MP3 · WAV · PDF</div>
+      </div>
+    </a>
+    <p style="font-size:10px;color:var(--white3);text-align:center;margin-bottom:0.75rem;">Opens Google Drive in a new tab — drop your files there, then come back to continue.</p>
+
+    <!-- Hidden fields to capture file notes -->
+    <div class="field"><label id="up-img">Describe what you're uploading (optional)</label><textarea id="f-files-desc" placeholder="e.g. 3 mood board images, rough demo track, press kit PDF…" style="min-height:55px;"></textarea></div>
   </div>
   <div class="step-foot"><button class="btn-b" onclick="go('s4')">← Back</button><button class="btn-p" onclick="v5()">Continue</button></div>
 </div>
@@ -494,7 +502,7 @@ body{display:flex;justify-content:center;}
     <div class="addon" onclick="togA(this)"><div class="addon-l"><span class="addon-ic">✦</span>Drone / Aerial</div><div class="addon-chk">+</div></div>
     <div class="addon" onclick="togA(this)"><div class="addon-l"><span class="addon-ic">✦</span>Script / Creative Writing</div><div class="addon-chk">+</div></div>
     <div class="tdiv" style="margin-top:1rem;"><div class="tdiv-line"></div><div class="tdiv-star">✦</div><div class="tdiv-line"></div></div>
-    <div class="field"><label>Anything else we should know?</label><textarea placeholder="Other needs, unusual requirements, special requests…" style="min-height:60px;"></textarea></div>
+    <div class="field"><label>Anything else we should know?</label><textarea id="f-other" placeholder="Other needs, unusual requirements, special requests…" style="min-height:60px;"></textarea></div>
   </div>
   <div class="step-foot"><button class="btn-b" onclick="backS8()">← Back</button><button class="btn-p" onclick="go('s9')">Continue</button></div>
 </div>
@@ -511,8 +519,8 @@ body{display:flex;justify-content:center;}
     </div>
     <div class="field"><label>Email address</label><input type="email" id="f-email" placeholder="you@example.com"/><span class="v-err" id="err-email">Please enter a valid email address</span></div>
     <div class="field"><label>Phone number</label><input type="tel" id="f-phone" placeholder="+1 (615) 000-0000"/><span class="v-err" id="err-phone">Required</span></div>
-    <div class="field"><label>Artist / Brand name</label><input type="text" placeholder="How you're known publicly"/></div>
-    <div class="field"><label>How did you find us?</label><select><option value="">Select one…</option><option>Referral from artist or team</option><option>Social media</option><option>Google search</option><option>Music industry network</option><option>Saw previous work</option><option>Other</option></select></div>
+    <div class="field"><label>Artist / Brand name</label><input type="text" id="f-brand" placeholder="How you're known publicly"/></div>
+    <div class="field"><label>How did you find us?</label><select id="f-referral"><option value="">Select one…</option><option>Referral from artist or team</option><option>Social media</option><option>Google search</option><option>Music industry network</option><option>Saw previous work</option><option>Other</option></select></div>
     <p style="font-size:10px;color:var(--white3);margin-top:0.25rem;line-height:1.65;">By submitting you agree to LORE's terms of use and confirm the confidentiality agreement. Your brief is private and shared only with the Stormlight Pictures creative team.</p>
   </div>
   <div class="step-foot"><button class="btn-b" onclick="go('s8')">← Back</button><button class="btn-red" onclick="v9()">Submit My Brief to LORE</button></div>
@@ -642,8 +650,8 @@ function v7(){
   go('s8');
 }
 
-/* ── STEP 9 VALIDATION — name, email, phone required ── */
-function v9(){
+/* ── STEP 9 VALIDATION + FORMSPREE SUBMIT ── */
+async function v9(){
   clearErr(['err-first','err-last','err-email','err-phone','f-first','f-last','f-email','f-phone']);
   let ok = true;
   const first = document.getElementById('f-first').value.trim();
@@ -663,7 +671,92 @@ function v9(){
     if(firstBad) document.getElementById(firstBad).focus();
     return;
   }
-  go('sC');
+
+  // Collect all data across all 9 steps
+  const g = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+
+  // Step 1 — project type cards
+  const selCards = [...document.querySelectorAll('#prod-cards .oc.sel, #post-cards .pc.sel, #dev-cards .dc.sel')].map(c=>c.querySelector('.oc-t,.pc-t') ? c.querySelector('[class$="-t"]').textContent : c.querySelector('div:nth-child(2)').textContent).join(', ');
+
+  // Step 6 — aesthetic pairs
+  const aestheticPairs = [...document.querySelectorAll('#s6 .po.sel')].map(el=>{
+    const label = el.closest('.ps').querySelector('.pl').textContent;
+    return label+': '+el.textContent;
+  }).join(' | ');
+
+  // Step 7 — DO and DON'T tags
+  const doTags   = [...document.querySelectorAll('#s7 .vt.on-do')].map(t=>t.textContent).join(', ');
+  const dontTags = [...document.querySelectorAll('#s7 .vt.on-dont')].map(t=>t.textContent).join(', ');
+
+  // Step 8 — addons
+  const addons = [...document.querySelectorAll('#s8 .addon.sel .addon-l')].map(a=>a.textContent.replace('✦','').trim()).join(', ');
+
+  // Budget
+  const budget = document.querySelector('.bc.sel') ? document.querySelector('.bc.sel .bc-r').textContent : '';
+
+  const payload = {
+    // Contact
+    'First Name': first,
+    'Last Name': last,
+    'Email': email,
+    'Phone': phone,
+    'Artist / Brand': g('f-brand'),
+    'How They Found Us': g('f-referral'),
+    // Step 1
+    'Path': path,
+    'Project Type': selCards,
+    // Step 2
+    'Filming Window': g('f-win'),
+    'Release Date': g('f-release'),
+    'Important Dates': g('f-dates'),
+    'Timeline Notes': g('f-timeline-notes'),
+    // Step 3
+    'Budget': budget,
+    // Step 4
+    'Vision — Going For': g('f-vision-main'),
+    'Vision — Inspirations': g('f-inspirations'),
+    'Vision — Avoid': g('f-avoid'),
+    'Dev — Idea': g('f-vision-dev'),
+    'Dev — Audience': g('f-dev-audience'),
+    'Dev — Success': g('f-dev-success'),
+    'Dev — Figured Out': g('f-dev-figured'),
+    'Dev — Avoid': g('f-dev-avoid'),
+    // Step 5
+    'Files Description': g('f-files-desc'),
+    // Step 6
+    'Aesthetic Pairs': aestheticPairs,
+    // Step 7
+    'Open To Include': doTags,
+    'Please Avoid': dontTags,
+    // Step 8
+    'Add-Ons': addons,
+    'Other Notes': g('f-other'),
+  };
+
+  // Show loading state on button
+  const btn = event.target;
+  const origText = btn.textContent;
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/mgondjbp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if(res.ok){
+      go('sC');
+    } else {
+      btn.textContent = origText;
+      btn.disabled = false;
+      alert('Something went wrong sending your brief. Please try again.');
+    }
+  } catch(err){
+    btn.textContent = origText;
+    btn.disabled = false;
+    alert('Connection error. Please check your internet and try again.');
+  }
 }
 
 /* clear validation styling when user starts typing / selecting */
