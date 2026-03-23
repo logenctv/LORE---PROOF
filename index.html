@@ -22,6 +22,102 @@ html,body{min-height:100%;background:#000;font-family:'DM Sans',sans-serif;}
 body{display:flex;justify-content:center;}
 .app{background:var(--black);color:var(--white);min-height:100vh;width:100%;max-width:430px;position:relative;overflow:hidden;}
 @media(min-width:431px){.app{border-left:1px solid var(--gold-dim);border-right:1px solid var(--gold-dim);}}
+
+/* ══ MID-RANGE TABLETS (568–899px) ══ */
+@media(min-width:568px) and (max-width:899px){
+  .app{max-width:100%;border:none;}
+  .screen{max-width:560px;margin:0 auto;width:100%;}
+  .step-body{padding:1.25rem 1.75rem;}
+  .step-hd{padding:1.25rem 1.75rem 1rem;}
+  .step-foot{padding:1rem 1.75rem 1.5rem;}
+  #s0 .splash-inner{max-width:520px;margin:0 auto;padding:2.5rem 2rem;}
+  #s0 .lore-logo{width:310px;}
+  #s0 .splash-tagline{font-size:24px;}
+}
+
+/* ══ DESKTOP / FULLSCREEN (900px+) ══ */
+@media(min-width:900px){
+  html,body{align-items:stretch;min-height:100vh;justify-content:flex-start;}
+  body{background:var(--black);}
+  .app{max-width:100%;width:100%;overflow:visible;border:none;display:flex;flex-direction:row;position:static;}
+  .bg-art{max-width:100%;left:0;right:0;}
+
+  /* Splash: full-bleed, centred wider content */
+  #s0{width:100%;min-height:100vh;flex-direction:column;}
+  #s0 .splash-inner{max-width:580px;margin:0 auto;padding:3.5rem 2rem 3rem;}
+  #s0 .lore-logo{width:340px;}
+  #s0 .splash-frame{padding:2rem 1.75rem;}
+  #s0 .splash-tagline{font-size:28px;letter-spacing:0.26em;}
+
+  /* Form screens become side-by-side */
+  .screen:not(#s0):not(#sC){flex-direction:row;width:100%;min-height:100vh;overflow:hidden;}
+
+  /* LEFT SIDEBAR */
+  .desk-sidebar{
+    width:300px;min-width:300px;flex-shrink:0;
+    background:var(--black2);
+    border-right:1px solid var(--border-dim);
+    display:flex;flex-direction:column;
+    padding:2.5rem 2rem 2rem;
+    position:sticky;top:0;height:100vh;overflow:hidden;
+  }
+  .desk-sidebar-logo{width:155px;margin-bottom:2.5rem;opacity:0.9;}
+  .desk-sidebar-eyebrow{font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem;}
+  .desk-sidebar-step{font-family:'Cinzel',serif;font-size:20px;font-weight:600;color:var(--white);line-height:1.25;margin-bottom:0.4rem;}
+  .desk-sidebar-sub{font-size:11px;color:var(--white3);line-height:1.6;margin-bottom:1.5rem;}
+  .desk-sidebar-progress{margin-top:auto;padding-top:1.5rem;border-top:1px solid var(--border-dim);}
+  .desk-prog-label{display:flex;justify-content:space-between;font-size:9px;letter-spacing:0.1em;color:var(--white3);margin-bottom:7px;}
+  .desk-prog-bar{height:2px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+  .desk-prog-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:2px;transition:width 0.5s ease;}
+  .desk-steps-list{margin-top:1.25rem;display:flex;flex-direction:column;gap:5px;}
+  .desk-step-item{display:flex;align-items:center;gap:9px;font-size:9px;letter-spacing:0.07em;color:var(--white3);opacity:0.4;transition:opacity 0.2s,color 0.2s;padding:2px 0;}
+  .desk-step-item.active{opacity:1;color:var(--gold);}
+  .desk-step-item.done{opacity:0.65;color:var(--white2);}
+  .desk-step-dot{width:4px;height:4px;border-radius:50%;background:currentColor;flex-shrink:0;}
+  .desk-sidebar-footer{margin-top:1.25rem;font-size:8px;color:var(--white3);opacity:0.4;letter-spacing:0.05em;line-height:1.6;}
+
+  /* RIGHT MAIN PANEL */
+  .desk-main{flex:1;display:flex;flex-direction:column;min-height:100vh;overflow-y:auto;background:var(--black);}
+  .desk-main .prog-bar,.desk-main .prog-meta{display:none;}
+  .desk-main .step-hd{padding:2.25rem 3.5rem 1.75rem;border-bottom:1px solid var(--border-dim);background:var(--black);}
+  .desk-main .step-hd .step-eyebrow{font-size:9px;}
+  .desk-main .step-hd .step-title{font-size:22px;}
+  .desk-main .step-hd .step-sub{font-size:13px;margin-top:0.35rem;}
+  .desk-main .step-body{padding:2rem 3.5rem;flex:1;}
+  .desk-main .step-foot{
+    padding:1.25rem 3.5rem 2rem;
+    border-top:1px solid var(--border-dim);
+    background:var(--black);
+    position:sticky;bottom:0;z-index:10;
+    display:flex;gap:12px;
+  }
+  .desk-main .step-foot .btn-b{width:auto;padding:14px 26px;flex-shrink:0;}
+  .desk-main .step-foot .btn-p,
+  .desk-main .step-foot .btn-red{flex:0 0 260px;}
+
+  /* Grid upgrades */
+  .desk-main .two-col{gap:16px;}
+  .desk-main .three-col{gap:12px;}
+  .desk-main .bg{grid-template-columns:1fr;gap:7px;}
+  .desk-main .bc{display:flex;align-items:center;justify-content:space-between;padding:0.9rem 1.2rem;text-align:left;}
+  .desk-main .bc-r{font-size:13px;}
+  .desk-main .bc-l{font-size:11px;margin-top:0;}
+  .desk-main .path-tabs{gap:12px;}
+  .desk-main .opt-grid{grid-template-columns:1fr 1fr;gap:9px;}
+  .desk-main .tw{display:flex;flex-wrap:wrap;gap:8px;}
+  .desk-main .tw .vt{flex:0 0 auto;}
+  .desk-main .ps .pr{gap:10px;}
+
+  /* Slightly larger inputs */
+  .desk-main .field input,.desk-main .field textarea,.desk-main .field select{font-size:14px;padding:10px 14px;}
+
+  /* Cap content width for legibility */
+  .desk-main .step-body > *{max-width:680px;}
+
+  /* Confirmation */
+  #sC{flex-direction:row;width:100%;}
+  #sC > div{max-width:640px;margin:0 auto;padding:5rem 2rem;}
+}
 .screen{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:2;}
 .screen.active{display:flex;animation:fadeUp 0.3s ease;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
@@ -109,9 +205,9 @@ body{display:flex;justify-content:center;}
 .splash-tagline{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;color:#ffffff;line-height:1.4;margin-bottom:1.4rem;text-shadow:0 2px 20px rgba(0,0,0,0.5);}
 .site-link{font-size:10px;color:var(--white3);letter-spacing:0.06em;text-decoration:none;border-bottom:1px solid var(--gold-dim);padding-bottom:1px;transition:color 0.2s;}
 .site-link:hover{color:var(--gold);}
-.presented-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:1.1rem;}
+.presented-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:1.1rem;isolation:auto;}
 .presented-by{font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--white3);}
-.storm-logo{width:185px;opacity:0.65;mix-blend-mode:screen;}
+.storm-logo{width:185px;opacity:0.75;mix-blend-mode:screen;}
 
 /* PROGRESS */
 .prog-bar{height:2px;background:var(--black3);}
@@ -668,8 +764,8 @@ input::placeholder,textarea::placeholder{color:var(--placeholder);font-style:ita
   <div class="step-hd" id="sh2"><p class="step-eyebrow" id="ey2">Describe Your World</p><h2 class="step-title" id="tt2">Tell us about your vision.</h2><p class="step-sub" id="sub2">No wrong answers. Paint us a picture.</p></div>
   <div class="step-body">
     <div id="vision-std">
-      <div class="field"><label>Project Rundown</label><textarea id="f-rundown" placeholder="Word vomit encouraged. What is this thing? Who's it for? What's the story? The more info the better — don't hold back." style="min-height:110px;"></textarea></div>
-      <div class="field"><label>What should this feel like?</label><textarea id="f-vision-main" placeholder="Describe the mood, energy, emotion — anything that comes to mind…" style="min-height:90px;"></textarea><span class="v-err" id="s2-err">Tell us a little about what you're going for — even a few words helps.</span></div>
+      <div class="field"><label>Project Rundown</label><textarea id="f-rundown" placeholder="Word vomit encouraged. What is this thing? Who's it for? What's the story? The more info the better — don't hold back." style="min-height:110px;"></textarea><span class="v-err" id="s2-err">Give us a quick rundown — even a sentence or two helps us get started.</span></div>
+      <div class="field"><label>What should this feel like?</label><textarea id="f-vision-main" placeholder="Describe the mood, energy, emotion — anything that comes to mind…" style="min-height:90px;"></textarea></div>
       <div class="field"><label>Any references? Artists, films, directors…</label><textarea id="f-inspirations" placeholder="e.g. Spike Jonze, that Billie Eilish video, the HBO title sequence…" style="min-height:70px;"></textarea></div>
       <div class="field"><label>Anything you definitely want to avoid?</label><textarea id="f-avoid" placeholder="Tones, styles, or vibes that don't fit your vision…" style="min-height:70px;"></textarea></div>
       <div class="field"><label>Deliverables</label><textarea id="f-deliverables" placeholder="# of files, Long vs short, Web or TV" style="min-height:70px;"></textarea></div>
@@ -716,7 +812,7 @@ input::placeholder,textarea::placeholder{color:var(--placeholder);font-style:ita
   <div class="step-hd" id="sh4"><p class="step-eyebrow" id="ey4">Timeline</p><h2 class="step-title" id="tt4">Ideal shooting window and release.</h2><p class="step-sub">Help us understand when you want to be in front of your audience.</p></div>
   <div class="step-body">
     <div class="field"><label id="lbl-w">Ideal filming window</label><input type="text" id="f-win" placeholder="e.g. Mid-April, late spring, ASAP…"/><span class="v-err" id="s4-err">Please give us a sense of your filming window — even "ASAP" or "flexible" works.</span></div>
-    <div class="field"><label>Confirmed Shoot Date <span style="font-size:9px;color:var(--white3);font-weight:400;letter-spacing:0.05em;">— Locked in</span></label><input type="date" id="f-confirmed-date" style="color-scheme:dark;"/></div>
+    <div class="field"><label>Event/Confirmed date <span style="font-size:9px;color:var(--white3);font-weight:400;letter-spacing:0.05em;">— Checking Stormlight Availability</span></label><input type="date" id="f-confirmed-date" style="color-scheme:dark;"/></div>
     <div class="field"><label>Target release / delivery date</label><input type="date" id="f-release" style="color-scheme:dark;"/></div>
     <div class="field"><label id="lbl-dates">Important Dates</label><input type="text" id="f-dates" placeholder="Album release, premiere date, festival deadline…"/></div>
     <div class="field"><label>Any other important info?</label><textarea id="f-timeline-notes" placeholder="Tour dates, blackout windows, launch events…" style="min-height:60px;"></textarea></div>
@@ -878,7 +974,79 @@ let path='production';
 const upS={img:['mood_ref_01.jpg','dark_editorial.jpg','lighting_inspo.png'],aud:['track_final_v3.mp3'],doc:['press_kit_2025.pdf']};
 const upI={img:0,aud:0,doc:0};
 
-function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+/* desktop sidebar */
+const STEP_LABELS=[
+  {id:'s1',label:'Project Type'},{id:'s2',label:'The Vision'},
+  {id:'s3',label:'Project Scope'},{id:'s4',label:'Timeline'},
+  {id:'s5',label:'References'},{id:'s6',label:'Aesthetic'},
+  {id:'s7',label:'Vision & Limits'},{id:'s8',label:'Add-ons'},
+  {id:'s9',label:'Your Account'}
+];
+const STEP_WIDTHS={s1:'11%',s2:'22%',s3:'33%',s4:'44%',s5:'55%',s6:'66%',s7:'77%',s8:'88%',s9:'100%',sC:'100%'};
+
+function buildDesktopSidebar(){
+  if(window.innerWidth<900)return;
+  document.querySelectorAll('.screen:not(#s0):not(#sC)').forEach(function(screen){
+    if(screen.querySelector('.desk-sidebar'))return;
+    var children=Array.from(screen.childNodes);
+    var main=document.createElement('div');
+    main.className='desk-main';
+    children.forEach(function(c){main.appendChild(c);});
+    var sid=document.createElement('div');
+    sid.className='desk-sidebar';
+    var loreLogoSrc=document.querySelector('.lore-logo') ? document.querySelector('.lore-logo').src : '';
+    var logoHtml=loreLogoSrc ? '<img src="'+loreLogoSrc+'" class="desk-sidebar-logo" alt="LORE"/>' : '<div style="font-family:Cinzel,serif;font-size:22px;font-weight:600;color:var(--white);letter-spacing:0.12em;margin-bottom:2.5rem;">LORE</div>';
+    var stepsHtml=STEP_LABELS.map(function(s){return '<div class="desk-step-item" id="dsk-si-'+screen.id+'-'+s.id+'"><span class="desk-step-dot"></span>'+s.label+'</div>';}).join('');
+    sid.innerHTML='<div>'+logoHtml+'<div class="desk-sidebar-eyebrow" id="dsk-ey-'+screen.id+'"></div><div class="desk-sidebar-step" id="dsk-tt-'+screen.id+'"></div><div class="desk-sidebar-sub" id="dsk-sub-'+screen.id+'"></div></div><div class="desk-sidebar-progress"><div class="desk-prog-label"><span id="dsk-num-'+screen.id+'">01 / 09</span><span id="dsk-pct-'+screen.id+'" style="color:var(--gold);">11%</span></div><div class="desk-prog-bar"><div class="desk-prog-fill" id="dsk-fill-'+screen.id+'" style="width:11%"></div></div><div class="desk-steps-list">'+stepsHtml+'</div><div class="desk-sidebar-footer">Stormlight Pictures &middot; LORE Platform</div></div>';
+    screen.insertBefore(sid,screen.firstChild);
+    screen.appendChild(main);
+  });
+}
+
+function syncDesktopSidebar(id){
+  if(window.innerWidth<900)return;
+  var screen=document.getElementById(id);
+  if(!screen||id==='s0'||id==='sC')return;
+  var ey=screen.querySelector('.step-eyebrow');
+  var tt=screen.querySelector('.step-title');
+  var sub=screen.querySelector('.step-sub');
+  var dEy=document.getElementById('dsk-ey-'+id);
+  var dTt=document.getElementById('dsk-tt-'+id);
+  var dSub=document.getElementById('dsk-sub-'+id);
+  if(dEy&&ey)dEy.textContent=ey.textContent;
+  if(dTt&&tt)dTt.textContent=tt.textContent;
+  if(dSub&&sub)dSub.textContent=sub.textContent;
+  var fill=document.getElementById('dsk-fill-'+id);
+  var pct=STEP_WIDTHS[id]||'11%';
+  if(fill)fill.style.width=pct;
+  var pctEl=document.getElementById('dsk-pct-'+id);
+  if(pctEl)pctEl.textContent=pct;
+  var idx=STEP_LABELS.findIndex(function(s){return s.id===id;});
+  var numEl=document.getElementById('dsk-num-'+id);
+  if(numEl&&idx>=0)numEl.textContent=String(idx+1).padStart(2,'0')+' / 09';
+  STEP_LABELS.forEach(function(s,i){
+    var item=document.getElementById('dsk-si-'+id+'-'+s.id);
+    if(!item)return;
+    item.classList.remove('active','done');
+    if(s.id===id)item.classList.add('active');
+    else if(i<idx)item.classList.add('done');
+  });
+}
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(window.innerWidth>=900){buildDesktopSidebar();syncDesktopSidebar(id);}
+}
+
+window.addEventListener('resize',function(){
+  if(window.innerWidth>=900){
+    buildDesktopSidebar();
+    var a=document.querySelector('.screen.active');
+    if(a)syncDesktopSidebar(a.id);
+  }
+});
 
 /* ── DRIVE UPLOAD: creates a private per-client folder via Apps Script ── */
 async function openDriveFolder(e){
@@ -968,13 +1136,13 @@ function v1(){
 
 /* ── STEP 2 VALIDATION — filming window required ── */
 function v2(){
-  clearErr(['s2-err','s2-dev-err','f-vision-main','f-vision-dev']);
+  clearErr(['s2-err','s2-dev-err','f-rundown','f-vision-main','f-vision-dev']);
   if(document.getElementById('vision-std').style.display!=='none'){
-    const val = document.getElementById('f-vision-main').value.trim();
+    const val = document.getElementById('f-rundown').value.trim();
     if(!val){
       showErr('s2-err');
-      markInvalid('f-vision-main');
-      document.getElementById('f-vision-main').focus();
+      markInvalid('f-rundown');
+      document.getElementById('f-rundown').focus();
       shakeBtn(event.target);
       return;
     }
